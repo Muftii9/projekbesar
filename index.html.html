@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Interaktif</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('img/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    .floating-hearts {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: floatUp 6s infinite ease-in;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .center {
+      width: 90%;
+      max-width: 450px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      padding: 20px;
+      text-align: center;
+      margin: 40px auto;
+      position: relative;
+      z-index: 1;
+      min-height: 300px; /* supaya layout gak lompat */
+    }
+
+    /* Teks typewriter */
+    .typewriter-text {
+      font-size: 1.2rem;
+      color: #333;
+      white-space: pre-wrap;
+      border-right: 2px solid #555;
+      overflow: hidden;
+      display: inline-block;
+      min-height: 1.5em; /* untuk stabil */
+    }
+
+    /* Fade-in class for images & buttons */
+    .fade-in {
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+    .fade-in.show {
+      opacity: 1;
+    }
+
+    img {
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      border-radius: 8px;
+      margin: 20px auto;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    img.show {
+      opacity: 1;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    .btn-group.show {
+      opacity: 1;
+    }
+
+    .btn-group button,
+    .center button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      background-color: #ff5e8e;
+      color: white;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .btn-group button:hover,
+    .center button:hover {
+      background-color: #ff2c6d;
+      transform: scale(1.05);
+    }
+
+    .tidak-btn {
+      position: absolute;
+    }
+
+    @media (max-width: 480px) {
+      h1, h2 {
+        font-size: 1rem;
+      }
+
+      .btn-group button,
+      .center button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+
+      img {
+        max-width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts -->
+  <div class="floating-hearts">
+    <div class="heart" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="heart" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="heart" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="heart" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="heart" style="left: 90%; animation-delay: 4s;"></div>
+  </div>
+
+  <!-- Halaman 1 -->
+  <div class="center" id="halaman1">
+    <h1><span class="typewriter-text" data-text="Hi cantik 💖"></span></h1>
+    <img src="img/halaman1.jpg" alt="Halaman 1" class="fade-in">
+    <button class="fade-in" onclick="pindahHalaman(2)">Yess?</button>
+  </div>
+
+  <!-- Halaman 2 -->
+  <div class="center" id="halaman2" style="display: none;">
+    <h2><span class="typewriter-text" data-text="Want to know about my feelings?"></span></h2>
+    <img src="img/halaman2.jpg" alt="Halaman 2" class="fade-in">
+    <div class="btn-group fade-in">
+      <button onclick="pindahHalaman(3)">Yes ofc</button>
+      <button class="tidak-btn" id="tidak2" onmouseover="acakPosisi('tidak2')">Nauurr</button>
+    </div>
+  </div>
+
+  <!-- Halaman 3 -->
+  <div class="center" id="halaman3" style="display: none;">
+    <h2><span class="typewriter-text" data-text="So, I've been thinking about us... and I should make it clear, right?"></span></h2>
+    <p><span class="typewriter-text" data-text="I don't want you to think that I'm not serious about this relationship. Because I don't know how to express my feelings and I'm not a romantic person. So, here, I have something for you. Want to open it?"></span></p>
+    <img src="img/halaman3.jpg" alt="Halaman 3" class="fade-in">
+    <div class="btn-group fade-in">
+      <button onclick="pindahHalaman(4)">Sure</button>
+      <button class="tidak-btn" id="tidak3" onmouseover="acakPosisi('tidak3')">Meh, not interest</button>
+    </div>
+  </div>
+
+  <!-- Halaman 4 -->
+  <div class="center" id="halaman4" style="display: none;">
+    <h2><span class="typewriter-text" data-text="Do you want to be my girlfriend, pretty girl?"></span></h2>
+    <img src="img/halaman4.jpg" alt="Halaman 4" class="fade-in">
+    <p><span class="typewriter-text" data-text="I am very grateful for all your love and affection... I'll try to give you my best... 😘"></span></p>
+    <a href="https://wa.me/6281234567890?text=Yes,%20I%20want%20to%20be%20your%20girlfriend!%20💖" target="_blank">
+      <button class="fade-in">Send me your answer pls</button>
+    </a>
+  </div>
+
+  <script>
+    // Fungsi animasi ketik untuk satu elemen teks
+    function typeWriter(element, text, speed = 50, callback) {
+      let i = 0;
+      element.textContent = "";
+      element.style.borderRight = "2px solid #555";
+      function typing() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        } else {
+          element.style.borderRight = "none";
+          if (callback) callback();
+        }
+      }
+      typing();
+    }
+
+    // Tampilkan halaman dengan animasi ketik dan fade-in gambar + tombol
+    function showPage(nomor) {
+      // Hide semua halaman dulu
+      for (let i = 1; i <= 4; i++) {
+        const page = document.getElementById('halaman' + i);
+        page.style.display = 'none';
+
+        // Reset teks typewriter (hapus text dan border)
+        page.querySelectorAll('.typewriter-text').forEach(el => {
+          el.textContent = "";
+          el.style.borderRight = "none";
+        });
+
+        // Remove show class fade-in dari gambar dan tombol
+        page.querySelectorAll('.fade-in').forEach(el => {
+          el.classList.remove('show');
+        });
+      }
+
+      // Tampilkan halaman yg dipilih
+      const page = document.getElementById('halaman' + nomor);
+      page.style.display = 'block';
+
+      // Jalankan animasi ketik satu per satu untuk tiap teks pada halaman ini
+      const texts = page.querySelectorAll('.typewriter-text');
+      let current = 0;
+
+      function nextText() {
+        if (current < texts.length) {
+          const el = texts[current];
+          const text = el.getAttribute('data-text');
+          typeWriter(el, text, 40, () => {
+            current++;
+            nextText();
+          });
+        } else {
+          // Setelah semua teks ketik selesai, munculkan gambar dan tombol fade-in
+          page.querySelectorAll('img.fade-in, .btn-group.fade-in, button.fade-in').forEach(el => {
+            el.classList.add('show');
+          });
+        }
+      }
+      nextText();
+    }
+
+    function pindahHalaman(nomor) {
+      showPage(nomor);
+    }
+
+    // Acak posisi tombol "tidak" agar susah ditangkap
+    function acakPosisi(idTombol) {
+      const tombol = document.getElementById(idTombol);
+      const container = tombol.parentElement.parentElement;
+      const maxX = container.clientWidth - tombol.offsetWidth;
+      const maxY = container.clientHeight - tombol.offsetHeight;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      tombol.style.left = randomX + "px";
+      tombol.style.top = randomY + "px";
+    }
+
+    // Saat halaman pertama dimuat, langsung jalankan animasi
+    document.addEventListener('DOMContentLoaded', () => {
+      showPage(1);
+    });
+  </script>
+
+</body>
+</html>
